@@ -20,6 +20,11 @@ pipeline {
       steps{
         sh '/bin/nc -vz localhost 80'
       }
+      post{
+        success{
+          sh 'docker container stop app'
+        }
+      }
     }
     stage('Tag and Push registry'){
       steps{
