@@ -16,5 +16,15 @@ pipeline {
         sh 'docker run -itd -p 80:80 --rm app'
       }
     }
+    stage ('Test web port'){
+      steps{
+        sh '/bin/nc -vz localhost 80'
+      }
+    }
+    stage('Tag and Push registry'){
+      steps{
+        sh 'docker tag app:test app:stable'
+      }
+    }
   }
 }
