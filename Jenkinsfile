@@ -13,7 +13,7 @@ pipeline {
     }
     stage('Deploy'){
       steps{
-        echo 'DEPLOY'
+        sh 'docker run -itd -p 80:80 --rm app'
       }
     }
   }
