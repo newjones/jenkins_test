@@ -13,7 +13,7 @@ pipeline {
     }
     stage('Deploy'){
       steps{
-        sh 'docker run -itd -p 80:80 --rm app||true'
+        sh 'docker run -itd -p 80:80 --name app --rm app||true'
       }
     }
     stage ('Test web port'){
