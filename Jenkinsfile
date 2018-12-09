@@ -15,6 +15,7 @@ pipeline {
       steps{
         withDockerServer([uri: 'tcp://10.0.0.111:2376']) {
           sh 'docker run -itd -p 80:80 --name app --rm app'
+        }
       }
     }
     stage ('Test web port'){
