@@ -22,7 +22,7 @@ pipeline {
       post{
         success{
           withDockerServer([credentialsId: 'jenkins-docker-test', uri: 'tcp://10.0.0.111:2376']) {
-            sh 'docker container stop app:test'
+            sh 'docker container stop app'
           }
         }
       }
