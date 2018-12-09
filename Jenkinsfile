@@ -3,12 +3,9 @@ pipeline {
   stages {
     stage('Build') {
       steps {
-        sh 'docker build -t app:test .'
-      }
-    }
-    stage('Test') {
-      steps {
-        echo 'Test'
+        withDockerServer([credentialsId: 'jenkins-docker-test', uri: 'tcp://10.0.0.111:2376']) {
+          sh 'docker build -t app:test .'
+        }
       }
     }
     stage('Deploy'){
@@ -24,13 +21,17 @@ pipeline {
       }
       post{
         success{
-          sh 'docker container stop app'
+          withDockerServer([credentialsId: 'jenkins-docker-test', uri: 'tcp://10.0.0.111:2376']) {
+            sh 'docker container stop app'
+          }
         }
       }
     }
     stage('Tag and Push registry'){
       steps{
-        sh 'docker tag app:test app:stable'
+        withDockerServer([credentialsId: 'jenkins-docker-test', uri: 'tcp://10.0.0.111:2376']) {
+          sh 'docker tag app:test app:stable'
+        }
       }
     }
   }
