@@ -11,13 +11,13 @@ pipeline {
     stage('Deploy'){
       steps{
         withDockerServer([credentialsId: 'jenkins-docker-test', uri: 'tcp://10.0.0.111:2376']) {
-          sh 'docker run --rm --name app -id -p 80:80 app:test'
+          sh 'docker run --rm --name app -id -p 80:80 app'
         }
       }
     }
     stage ('Test web port'){
       steps{
-        sh '/bin/nc -vz localhost 80'
+        sh '/bin/nc -vz 10.0.0.111 80'
       }
       post{
         success{
