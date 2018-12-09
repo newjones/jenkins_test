@@ -11,7 +11,7 @@ pipeline {
     stage('Deploy'){
       steps{
         withDockerServer([credentialsId: 'jenkins-docker-test', uri: 'tcp://10.0.0.111:2376']) {
-          sh 'docker run --rm --name app -id -p 80:80 app'
+          sh 'docker run --rm --name app -id -p 80:80 app:test'
         }
       }
     }
